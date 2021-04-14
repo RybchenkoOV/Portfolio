@@ -1,4 +1,4 @@
-package L7_ProjectWeather.entity;
+package L7_L8_ProjectWeather.entity;
 
 import java.util.List;
 
@@ -56,5 +56,17 @@ public class Weather {
 
     public void setWeatherText(String weatherText) {
         this.weatherText = weatherText;
+    }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "city='" + city + '\'' +
+                ", localDate='" + localDate + '\'' +
+                ", temperature=" + temperature +
+                ", weatherText='" + weatherText + '\'' +
+                ", localDates=" + localDates +
+                ", localTemps=" + localTemps +
+                '}';
     }
 }
