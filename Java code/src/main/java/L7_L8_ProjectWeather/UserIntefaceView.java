@@ -1,6 +1,7 @@
-package L7_ProjectWeather;
+package L7_L8_ProjectWeather;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserIntefaceView {
@@ -15,7 +16,9 @@ public class UserIntefaceView {
             String city = scanner.nextLine();
 
             System.out.println("Введите 1 для получения текущей погоды, " +
-                    "введите 2 для получения прогноза погоды на 5 дней, для выхода введите \"выход\"");
+                    "введите 2 для получения прогноза погоды на 5 дней, " +
+                    "введите 3 для выгрузки из БД, " +
+                    "для выхода введите \"выход\"");
 //TODO: поддержать 3 пункт меню (вывод из базы) в интерфейсе // --------------
             String command = scanner.nextLine();
 
@@ -26,7 +29,7 @@ public class UserIntefaceView {
 
             try {
                 controller.getWeather(command, city);
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
                 e.printStackTrace();
                 continue;
             }

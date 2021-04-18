@@ -1,6 +1,4 @@
-package L7_ProjectWeather;
-
-import java.io.IOException;
+package L7_L8_ProjectWeather;
 
 public class Main {
     public static void main(String[] args) throws Exception {

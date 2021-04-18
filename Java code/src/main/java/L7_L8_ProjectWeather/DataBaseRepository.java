@@ -1,16 +1,15 @@
-package L7_ProjectWeather;
+package L7_L8_ProjectWeather;
 
-import L7_ProjectWeather.entity.Weather;
+import L7_L8_ProjectWeather.entity.Weather;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class DataBaseRepository {
     private static final String DB_NAME = "geekbrains.db";
-    String insertWeather = "insert into weather (city, localdate, temperature, weather_text) values (?, ?, ?, ?)";
-//    String getWeather = ""
+    String insertWeather = "insert into weather (city, localdate, temperature, weathertext) values (?, ?, ?, ?)";
+    String getWeather = "select * from weather";
 
     static {
         try {
@@ -36,10 +35,26 @@ public class DataBaseRepository {
     }
 
 ////    TODO: Реализовать метод для считывания данных о погоде //-----------------
-//    public List<Weather> getSavedWeatherData() {
-//        PreparedStatement statement = "";
-//        statement.executeQuery(select )
-//    }
+    public List<Weather> getSavedWeatherData(Weather weather) throws SQLException {
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:geekbrains.db")) {
+            Statement statement = connection.createStatement();
+//            Weather weatherFromDB = new Weather();
+            ResultSet resultWeatherSet = statement.executeQuery(getWeather);
+            while (resultWeatherSet.next()) {
+                weather.setCity(resultWeatherSet.getString("city"));
+                weather.setLocalDate(resultWeatherSet.getString("localdate"));
+                weather.setTemperature(resultWeatherSet.getDouble("temperature"));
+                weather.setWeatherText(resultWeatherSet.getString("weathertext"));
+            }
+//            System.out.println(weather.getCity());
+//            System.out.println(weather.getLocalDate());
+//            System.out.println(weather.getTemperature());
+//            System.out.println(weather.getWeatherText());
+
+
+            return Arrays.asList(weather);
+        }
+    }
 
     public static void main(String[] args) throws SQLException {
         DataBaseRepository dataBaseRepository = new DataBaseRepository();

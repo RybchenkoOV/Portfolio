@@ -1,6 +1,6 @@
-package L7_ProjectWeather;
+package L7_L8_ProjectWeather;
 
-import L7_ProjectWeather.entity.Weather;
+import L7_L8_ProjectWeather.entity.Weather;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.HttpUrl;
@@ -36,6 +36,8 @@ public class AccuWeatherModel implements WeatherModel {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private Weather weather;
     private Weather weatherForFiveDays;
+
+    DataBaseRepository dataBaseRepository = new DataBaseRepository();
 
 
     public Weather jsonParser(String response, Period period, String city) throws IOException, ParseException {
@@ -126,7 +128,6 @@ public class AccuWeatherModel implements WeatherModel {
             System.out.println("Today, " + weather.getLocalDate() + " in " + weather.getCity() + " the weather is " + weather.getWeatherText() + ". And temperature is " + weather.getTemperature() + " degrees Celsius");
             System.out.println();
 
-            DataBaseRepository dataBaseRepository = new DataBaseRepository();
             try {
                 dataBaseRepository.saveWeatherData(jsonParser(responseString, Period.NOW, selectedCity)); // Здесь вызываем метод для
                 // парсинга одного дня. Выдаст ошибку по SQL, но она обработана. К сожалению с SQLite пока не разобрался
@@ -165,7 +166,6 @@ public class AccuWeatherModel implements WeatherModel {
                 e.printStackTrace();
             }
 
-            DataBaseRepository dataBaseRepository = new DataBaseRepository();
             try {
                 dataBaseRepository.saveWeatherData(jsonParser(responseStringFiveDays, Period.FIVE_DAYS, selectedCity)); // Здесь вызываем метод для
                 // парсинга недели. Выдаст ошибку по SQL, но она обработана. К сожалению с SQLite пока не разобрался
@@ -178,9 +178,9 @@ public class AccuWeatherModel implements WeatherModel {
     }
 
     @Override
-    public void getSavedWeatherData() {
+    public void getSavedWeatherData() throws SQLException {
         //TODO: Обратиться к  DataBaseRepository и вызвать метод getSavedWeatherData //-----------------
-
+        System.out.println(dataBaseRepository.getSavedWeatherData(weather));
 
     }
 
